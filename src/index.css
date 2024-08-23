@@ -6,7 +6,35 @@
   margin: 0;
   box-sizing: border-box;
 }
-body {
- 
-  background-color: #3b4664;
+
+body[data-theme="theme1"] {
+  --main-bg: hsla(222, 26%, 31% ,0.8); /* main background */
+  --screen-bg: hsl(224, 36%, 15%); /* screen background */
+  --display-text-color: hsl(0, 0%, 100%);
 }
+
+body[data-theme="theme2"] {
+  --main-bg: hsl(0, 36%, 80%,0.8); /* main background */
+  --screen-bg: hsl(0, 25%, 68%); /* screen background */
+  --display-text-color: hsl(60, 10%, 19%);
+}
+
+body[data-theme="theme3"] {
+  --main-bg: hsla(268, 75%, 9%,0.8); /* main background */ 
+  --screen-bg: hsl(268, 71%, 12%); /* screen background */
+  --display-text-color: hsl(52, 100%, 62%);
+}
+
+body {
+  background-color: var(--main-bg) !important;
+  transition: 0.7s linear;
+}
+
+.input-screen , .toggle , .grid-screen{
+  background-color: var(--screen-bg);
+}
+
+.first-div  , .calc-text , .input-screen {
+  color:  var(--display-text-color);
+}
+

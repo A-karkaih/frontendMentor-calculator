@@ -4,7 +4,10 @@ const App = () => {
   const [display, setDisplay] = useState("0");
 
   const handleEv = (val) => {
-    if (['+', '-', '*', '/'].includes(display.slice(-1)) && ['+', '-', '*', '/'].includes(val)) {
+    if (
+      ["+", "-", "*", "/"].includes(display.slice(-1)) &&
+      ["+", "-", "*", "/"].includes(val)
+    ) {
       setDisplay(display.slice(0, -1) + val);
     } else {
       if (display === "0" && val !== ".") {
@@ -15,7 +18,6 @@ const App = () => {
         }
       }
     }
-    
   };
   const handleDelete = () => {
     if (display.length === 1 || display === "0") {
@@ -24,77 +26,88 @@ const App = () => {
       setDisplay(display.slice(0, -1));
     }
   };
-  const handleReset = () => { 
-    setDisplay('0');
+  const handleReset = () => {
+    setDisplay("0");
   };
   const handleCalc = () => {
     try {
-      setDisplay(eval(display).toString())
+      setDisplay(eval(display).toString());
     } catch (error) {
-      setDisplay(eval("error"))
+      setDisplay(eval("error"));
       console.log(error);
-      
     }
-    
   };
-  const [stage, setStage] = useState(0); 
+  const [stage, setStage] = useState(0);
 
+  useEffect(() => {
+    document.body.setAttribute("data-theme", "theme1");
+  }, []);
   const handleClick = () => {
     setStage((prevStage) => {
       const newStage = (prevStage + 1) % 3;
       // Update the background color based on the new stage
-      switch(newStage) {
+      switch (newStage) {
         case 0:
-          document.body.style.backgroundColor = "#3b4664";
+          {
+            document.body.setAttribute("data-theme", "theme1");
+          }
           break;
         case 1:
-          document.body.style.backgroundColor = "white";
+          {
+            document.body.setAttribute("data-theme", "theme2");
+          }
+          break;
+
+        case 2:
+          {
+            document.body.setAttribute("data-theme", "theme3");
+          }
           break;
         default:
-          document.body.style.backgroundColor = "purple";
       }
       return newStage;
     });
   };
 
-
   return (
-    <div className="  w-[300px]  sm:w-[400px] h-[500px] grid grid-rows-12  mt-5 mx-auto ">
+    <div className="w-[300px]  sm:w-[400px] h-[500px] grid grid-rows-12  mt-5 mx-auto ">
       <div className="flex items-center px-2 justify-between row-span-1   ">
-        <h1 className="text-lg font-bold text-white ">Calc</h1>
-        <div className=" w-28 h-6 flex gap-2 items-end">
-          <p className="text-xs text-white cursor-default">theme</p>
+        <h1 className="text-lg font-bold calc-text">Calc</h1>
+        <div className="first-div w-28 h-6 flex gap-2 items-end">
+          <p className=" text-xs font-bold cursor-default">themes</p>
           <div className="flex-col flex items-center">
-      <div style={{ fontSize: '0.6rem' }} className=" w-13 flex gap-3 px-[6px] text-white font-semibold">
-        <p className={`${stage === 0 ? 'text-red-600' : ''}`}>1</p>
-        <p className={`${stage === 1 ? 'text-red-600' : ''}`}>2</p>
-        <p className={`${stage === 2 ? 'text-red-600' : ''}`}>3</p>
-      </div>
-      <div
-        className="h-4 w-14 rounded-xl bg-[rgb(25,30,50)] flex items-center pl-[6px]  py-[6px] cursor-pointer"
-        onClick={handleClick}
-      >
-        <div
-          className={`h-[13px] w-[13px] rounded-full bg-red-600 transition-transform duration-300`}
-          style={{
-            transform: `translateX(${stage * 16}px)`, 
-          }}
-        />
-      </div>
-    </div>
-        
+            <div
+              style={{ fontSize: "0.7rem" }}
+              className={`w-13  flex gap-3 px-[6px] font-semibold  `}
+            >
+              <p className={`${stage === 0 ? "text-red-600" : ""}`}>1</p>
+              <p className={`${stage === 1 ? "text-red-600" : ""}`}>2</p>
+              <p className={`${stage === 2 ? "text-red-600" : ""}`}>3</p>
+            </div>
+            <div
+              className=" toggle h-4 w-14 rounded-xl bg-[rgb(25,30,50)] flex items-center pl-[6px]  py-[6px] cursor-pointer"
+              onClick={handleClick}
+            >
+              <div
+                className={` h-[13px] w-[13px] rounded-full bg-red-600 transition-transform duration-300`}
+                style={{
+                  transform: `translateX(${stage * 16}px)`,
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div className=" row-span-2">
         <input
-        defaultValue="00"
+          defaultValue="00"
           value={display}
           readOnly
           type="text"
-          className="bg-[rgb(25,30,50)] rounded-md h-[100%] w-[100%] text-white text-4xl font-bold text-right pr-3 cursor-default focus:outline-none"
+          className={` input-screen rounded-md h-[100%] w-[100%]  text-4xl font-bold text-right pr-3 cursor-default focus:outline-none `}
         />
       </div>
-      <div className="mt-3 rounded-md bg-[rgb(36,45,69)] row-span-9 gap-4 grid-cols-12 grid grid-rows-10 p-6">
+      <div className="grid-screen  mt-3 rounded-md bg-[rgb(36,45,69)] row-span-9 gap-4 grid-cols-12 grid grid-rows-10 p-6">
         <button
           onClick={() => handleEv("7")}
           className="bg-[rgb(234,227,219)] col-span-3 row-span-2 rounded-md shadow-lg text-2xl font-bold"

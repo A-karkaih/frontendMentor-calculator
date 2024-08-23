@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const App = () => {
   const [display, setDisplay] = useState("0");
@@ -40,10 +40,26 @@ const App = () => {
   const [stage, setStage] = useState(0); 
 
   const handleClick = () => {
-    setStage((prevStage) => (prevStage + 1) % 3);
+    setStage((prevStage) => {
+      const newStage = (prevStage + 1) % 3;
+      // Update the background color based on the new stage
+      switch(newStage) {
+        case 0:
+          document.body.style.backgroundColor = "#3b4664";
+          break;
+        case 1:
+          document.body.style.backgroundColor = "white";
+          break;
+        default:
+          document.body.style.backgroundColor = "purple";
+      }
+      return newStage;
+    });
   };
+
+
   return (
-    <div className="w-[400px] h-[500px] grid grid-rows-12  mt-5 mx-auto ">
+    <div className="  w-[300px]  sm:w-[400px] h-[500px] grid grid-rows-12  mt-5 mx-auto ">
       <div className="flex items-center px-2 justify-between row-span-1   ">
         <h1 className="text-lg font-bold text-white ">Calc</h1>
         <div className=" w-28 h-6 flex gap-2 items-end">
